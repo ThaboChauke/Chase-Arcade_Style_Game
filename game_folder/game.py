@@ -3,11 +3,11 @@ import random
 from tkinter import messagebox
 
 
-###################SETUP WINDOW
-window = Screen()
-window.title("Chase-Snake_Type")
-window.bgcolor('black')
-window.setup(700,700)
+# ###################SETUP WINDOW
+# window = Screen()
+# window.title("Chase-Snake_Type")
+# window.bgcolor('black')
+# window.setup(700,700)
 
 
 ####################SETUP TURTLES
@@ -46,25 +46,27 @@ class Border(Turtle):
         self.penup()
 
 
-############TURTLE CALLS
-chaser = Chaser()
-score_keeper = Score_Keeper()
-target = Target()
+# ############TURTLE CALLS
+# chaser = Chaser()
+# score_keeper = Score_Keeper()
+# target = Target()
 ################KEYBOARD AND DIRECTIONS
 
-def Turn_left():
-    chaser.left(30)
 
-def Turn_right():
-    chaser.right(30)
 
-def keyboard():
+def keyboard(item):
+    def Turn_left():
+        item.left(30)
+
+    def Turn_right():
+        item.right(30)
+
     listen()
     onkey(Turn_left, 'Left')
     onkey(Turn_right, 'Right')
 
 
-################TARGETS AND BORDER
+################OBSTACLES, TARGETS AND BORDER
 def random_target():
     target = (random.randint(-295,295),random.randint(-295,295))
     return target
@@ -87,12 +89,24 @@ def keeping_score(item,score):
     item.undo()
     item.setposition(-290,310)
     current_score = f"Score: {score}"
-    item.write(current_score,False,align='left',font=('Arial',14,'normal'))
+    item.write(current_score,False,align='left',font=('Palatino',14,'normal'))
 
 
-def run_game():
+def run_game(hard_mode = False):
+###################SETUP WINDOW
+    window = Screen()
+    window.title("Chase-Snake_Type")
+    window.bgcolor('black')
+    window.setup(700,700)
+
+############TURTLE CALLS
+    chaser = Chaser()
+    score_keeper = Score_Keeper()
+    target = Target()
+
+    
     the_border()
-    keyboard()
+    keyboard(chaser)
     target_coords = random_target()
 
     target.goto(target_coords)
@@ -108,6 +122,7 @@ def run_game():
             chaser.right(180)
             messagebox.showwarning("Alert", f"Game Over\n \nYour Score: {score}")
             get_name = window.textinput('Name', 'Enter your name:')
+            print(hard_mode)
             window.bye()
 
         elif chaser.distance(target) < 20:
@@ -121,6 +136,6 @@ def run_game():
         window.update()
 
 
-if __name__ == '__main__':
-    run_game()
+# if __name__ == '__main__':
+#     run_game()
     
