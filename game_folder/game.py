@@ -3,15 +3,7 @@ import random
 from tkinter import messagebox
 
 
-# ###################SETUP WINDOW
-# window = Screen()
-# window.title("Chase-Snake_Type")
-# window.bgcolor('black')
-# window.setup(700,700)
-
-
 ####################SETUP TURTLES
-
 class Chaser(Turtle):
     def __init__(self):
         Turtle.__init__(self)
@@ -45,16 +37,25 @@ class Border(Turtle):
         self.speed(0)
         self.penup()
 
+class Obstacle(Turtle):
+    def __init__(self):
+        Turtle.__init__(self)
+        self.shape('square')
+        self.begin_fill()
+        self.color('white','red')
+        self.end_fill()
+        self.speed(0)
+        self.penup()
 
-# ############TURTLE CALLS
-# chaser = Chaser()
-# score_keeper = Score_Keeper()
-# target = Target()
+
 ################KEYBOARD AND DIRECTIONS
-
-
-
 def keyboard(item):
+    """_Creates keys to control the layer's turtle_
+
+    Args:
+        item (_Chaser_): _a Turtle Class_
+    """
+
     def Turn_left():
         item.left(30)
 
@@ -66,12 +67,21 @@ def keyboard(item):
     onkey(Turn_right, 'Right')
 
 
-################OBSTACLES, TARGETS AND BORDER
+
 def random_target():
-    target = (random.randint(-295,295),random.randint(-295,295))
-    return target
+    """_Generates random coordinates_
+
+    Returns:
+        _tuple_: _random coordinayes_
+    """
+
+    return (random.randint(-295,295),random.randint(-295,295))
+
 
 def the_border():
+    """_Creates a border on game screen_
+    """
+
     border = Border()
     border.setpos(-300,300)
 
@@ -82,10 +92,26 @@ def the_border():
 
 
 def game_zone_check(item):
+    """_Checks if item in gamezone_
+
+    Args:
+        item (_Chaser_): _a Turtle Class_
+
+    Returns:
+        _bool_: _returns True if outside the gamezone and False otherwise_
+    """
+
     return item.xcor() <= -300 or item.xcor() >=  300 or item.ycor() <= -300 or item.ycor() >= 300
 
 
 def keeping_score(item,score):
+    """_Writes and updates the player's score on the turtle screen_
+
+    Args:
+        item (_Score_Keeper): _a Turtle Class_
+        score (_int_): _player's score_
+    """
+
     item.undo()
     item.setposition(-290,310)
     current_score = f"Score: {score}"
@@ -93,6 +119,7 @@ def keeping_score(item,score):
 
 
 def run_game(hard_mode = False):
+
 ###################SETUP WINDOW
     window = Screen()
     window.title("Chase-Snake_Type")
@@ -104,38 +131,51 @@ def run_game(hard_mode = False):
     score_keeper = Score_Keeper()
     target = Target()
 
-    
+########################
     the_border()
     keyboard(chaser)
-    target_coords = random_target()
+    obstacles = []
+    score = 0
 
+############FIRST TARGET
+    target_coords = random_target()
     target.goto(target_coords)
     target.stamp()
 
-    score = 0
+####################OBSTACLES
+    if hard_mode:
+        for _ in range(10):
+            obstacle = Obstacle()
+            obstacle_coords = random_target()
+            obstacle.setposition(obstacle_coords)
+            obstacle.stamp()
+            obstacles.append(obstacle)
 
     while True:
         chaser.forward(5)
-        chaser.speed(3)
-        
+        chaser.speed(3) 
+
         if game_zone_check(chaser):
-            chaser.right(180)
             messagebox.showwarning("Alert", f"Game Over\n \nYour Score: {score}")
             get_name = window.textinput('Name', 'Enter your name:')
-            print(hard_mode)
             window.bye()
 
         elif chaser.distance(target) < 20:
             target.clearstamps()
             target_coords = random_target()
-            target.goto(target_coords)
-            target.stamp()
-            score += 1
-            keeping_score(score_keeper,score)
+            if target_coords in obstacles:
+                target_coords = random_target()
+            else:
+                target.goto(target_coords)
+                target.stamp()
+                score += 1
+                keeping_score(score_keeper,score)
+
+        for obstacle in obstacles:
+            if chaser.distance(obstacle) < 20:
+                messagebox.showwarning("Alert", f"Game Over\n \nYour Score: {score}")
+                get_name = window.textinput('Name', 'Enter your name:')
+                print(hard_mode)
+                window.bye()
             
         window.update()
-
-
-# if __name__ == '__main__':
-#     run_game()
-    
