@@ -137,8 +137,8 @@ def run_board():
 
     mainloop()
 
-run_board()
+# run_board()
 
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()
