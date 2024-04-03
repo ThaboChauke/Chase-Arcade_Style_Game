@@ -122,7 +122,7 @@ def run_game(hard_mode = False):
 
 ###################SETUP WINDOW
     window = Screen()
-    window.title("Chase-Snake_Type")
+    window.title("Chase")
     window.bgcolor('black')
     window.setup(700,700)
 
