@@ -19,7 +19,7 @@ This game requires Python 3.x and the following Python libraries:
 
 ## How to Run
 
-To play the game, simply execute the Python script ` Chase-Arcade_Style_Game`. The game window will appear, and you can start playing immediately. Follow the on-screen instructions to control the chaser turtle and collect targets.
+To play the game, simply execute the Python script `Chase-Arcade_Style_Game`. The game window will appear, and you can start playing immediately. Follow the on-screen instructions to control the chaser turtle and collect targets.
 
 ## License
 
