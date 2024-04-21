@@ -73,7 +73,6 @@ def run_board():
     app.geometry('500x500')
     app.title('Leaderboard')
     app.config(background='black',highlightthickness=4,highlightcolor='red',highlightbackground="blue")
-    # padding = (5,5)
 
 
     def back_to_home():
@@ -123,6 +122,12 @@ def run_board():
 
 
 def read_leaderboard_from_json():
+    """_Reads player's data from json file_
+
+    Returns:
+        _list_: _list of tuples containing names and scores of players_
+    """
+    
     try:
         with open('leaderboard.json', mode='r') as file:
             data = json.load(file)

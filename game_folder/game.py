@@ -120,6 +120,13 @@ def keeping_score(item,score):
 
 
 def add_to_json(name, score):
+    """_Adds player's name and score json file_
+
+    Args:
+        name (_str_): _player's name_
+        score (_int_): _player's score_
+    """
+    
     try:
         with open('leaderboard.json', mode='r') as file:
             data = json.load(file)
@@ -131,32 +138,6 @@ def add_to_json(name, score):
     with open('leaderboard.json', mode='w') as file:
         json.dump(data, file)
 
-
-
-# def add_to_json(name,score):
-#     """_This function adds the user's name to a dictionary with score
-#     as key and updates json file_
-#     """
-
-#     data_1 = []
-#     final_data = []
-
-    # with open('leaderboard.json', mode='r') as file:
-    #     data_1.append(json.load(file))
-    
-    # tasks_at_end = {name:str(score)}
-    # for i in data_1:
-    #     if type(i) is list:
-    #         final_data.append(i[1])
-    #     else:
-    #         final_data.append(i)
-
-    # final_data.append(tasks_at_end)
-
-    # with open('leaderboard.json', mode='w') as f:
-    #     json.dump(final_data,f)
-
-    # return
 
 def run_game(hard_mode = False):
 
