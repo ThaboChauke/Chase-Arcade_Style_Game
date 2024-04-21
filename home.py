@@ -1,3 +1,4 @@
+import json
 from tkinter import *
 from tkinter import messagebox
 from game_folder.game import run_game
@@ -16,7 +17,7 @@ def main():
             app.destroy()
             run_game()
         except :
-            app.mainloop()        
+            main()       
 
     def play_hard_mode():
         try:
@@ -72,7 +73,7 @@ def run_board():
     app.geometry('500x500')
     app.title('Leaderboard')
     app.config(background='black',highlightthickness=4,highlightcolor='red',highlightbackground="blue")
-    padding = (5,5)
+    # padding = (5,5)
 
 
     def back_to_home():
@@ -90,20 +91,12 @@ def run_board():
     empty = Label(app,text='',background='black')
     empty.grid(row=1)
 
-    name = Label(app,text='Leaderboard',background='black',font=('Palatino',8),fg='white')
+    name = Label(app,text='Leaderboard',background='black',font=('Palatino',16),fg='white')
     name.grid(row=2,column=0, columnspan=2)
 
     empty = Label(app,text='',background='black')
     empty.grid(row=3)
 
-    # board = Listbox(app,highlightcolor='red')
-    # board.grid(row=4,column=0, sticky='nsew',columnspan=2)
-
-    # leaderboard = Button(app,text='Back to Home',command=back_to_home,font=('Palatino',8),highlightbackground='red')
-    # leaderboard.grid(row=5,column=0)
-
-    # exit_game = Button(app,text='Exit',command=exit_game_function,font=('Palatino',8),highlightbackground='red')
-    # exit_game.grid(row=5,column=1)
 
     app.grid_rowconfigure(4, weight=1)
     app.grid_columnconfigure(0, weight=1)
@@ -112,21 +105,13 @@ def run_board():
     board = Listbox(app, highlightcolor='red')
     board.grid(row=4, column=0, sticky='nsew', columnspan=2)
 
+    leaderboard_data = read_leaderboard_from_json()
 
-    leaderboard_data = [
-        ("Player 1", 100),
-        ("Player 2", 80),
-        ("Player 3", 120)
-    ]
-
-    board = Listbox(app, highlightcolor='red', font=('Palatino', 8))
+    board = Listbox(app, highlightcolor='red', font=('Palatino', 12))
     board.grid(row=4, column=0, sticky='nsew', columnspan=2)
 
-    # Insert data into the listbox in a table-like format
     for name, score in leaderboard_data:
         board.insert('end', f"{name:<20}{score:>10}")
-
-
 
     leaderboard = Button(app, text='Back to Home', command=back_to_home, font=('Palatino',8), highlightbackground='red')
     leaderboard.grid(row=5, column=0, sticky='ew')
@@ -134,10 +119,22 @@ def run_board():
     exit_game = Button(app, text='Exit', command=exit_game_function, font=('Palatino',8), highlightbackground='red')
     exit_game.grid(row=5, column=1, sticky='ew')
 
-
     mainloop()
 
-# run_board()
+
+def read_leaderboard_from_json():
+    try:
+        with open('leaderboard.json', mode='r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        return []
+
+    leaderboard_data = []
+    for entry in data:
+        for name, score in entry.items():
+            leaderboard_data.append((name, int(score)))
+
+    return leaderboard_data
 
 
 if __name__ == '__main__':

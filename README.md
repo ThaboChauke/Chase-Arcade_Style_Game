@@ -1,26 +1,43 @@
-# Chase-Snake_Type
+# Chase Game
 
-Chase-Arcade_Style_Game is a simple arcade-style game built using Python's Turtle graphics library. In this game, the player controls an arrow-shaped chaser turtle within a bordered area. The objective is to chase and "eat" randomly appearing red circular targets while avoiding hitting the borders of the game zone. The player's score increases each time a target is successfully reached.
+This is a simple game called "Chase" implemented in Python using the Turtle graphics library.
+
+## Description
+
+"Chase" is a game where the player controls an arrow-shaped character (chaser) using the arrow keys on the keyboard. The objective is to chase and capture moving targets represented by circles on the screen while avoiding obstacles represented by squares. The player earns points for capturing targets and loses the game if the chaser collides with the borders of the game zone or any obstacles.
+
 
 ## Features
 
-- Simple and intuitive controls: Use the left and right arrow keys to rotate the chaser turtle.
-- Randomly generated targets: Targets appear at random positions within the game zone.
-- Score tracking: The player's score is displayed on the screen, updating in real-time as targets are collected.
-- Game over mechanism: The game ends if the chaser turtle collides with the borders of the game zone. A message box displays the final score, and the player can enter their name for the leaderboard.
+- Two game modes: Normal and Hard Mode.
+- Random generation of targets and obstacles.
+- Score tracking and display.
+- Leaderboard to track high scores.
+- Basic GUI using Tkinter for the main menu and leaderboard view.
 
-## Dependencies
 
-This game requires Python 3.x and the following Python libraries:
+## Prerequisites
 
-- `turtle`: Turtle graphics library for drawing and animation.
-- `random`: Python's built-in module for generating random numbers.
-- `tkinter`: Python's standard GUI toolkit for creating message boxes.
+- Python 3.x
+- tkinter (for GUI)
+- turtle (for graphics)
 
-## How to Run
 
-To play the game, simply execute the Python script `Chase-Arcade_Style_Game`. The game window will appear, and you can start playing immediately. Follow the on-screen instructions to control the chaser turtle and collect targets.
+## Usage
 
-## License
+1. Run the main script to start the game:
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+    - python main.py
+
+2. Use the arrow keys to control the chaser and capture targets.
+
+3. Select "Play" or "Play Hard Mode" to start the game.
+
+4. Enter your name when prompted to save your score to the leaderboard.
+
+5. Select "View Leaderboard" to see the high scores.
+
+
+## Credits
+
+- Developed by ***Thabo Chauke***

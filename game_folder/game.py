@@ -119,29 +119,44 @@ def keeping_score(item,score):
     item.write(current_score,False,align='left',font=('Palatino',14,'normal'))
 
 
-def add_to_json(name,score):
-    """_This function adds the user's name to a dictionary with score
-    as key and updates json file_
-    """
+def add_to_json(name, score):
+    try:
+        with open('leaderboard.json', mode='r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        data = []
 
-    data_1 = []
-    final_data = []
+    data.append({name: score})
 
-    with open('leaderboard.json', mode='r') as file:
-        data_1.append(json.load(file))
+    with open('leaderboard.json', mode='w') as file:
+        json.dump(data, file)
+
+
+
+# def add_to_json(name,score):
+#     """_This function adds the user's name to a dictionary with score
+#     as key and updates json file_
+#     """
+
+#     data_1 = []
+#     final_data = []
+
+    # with open('leaderboard.json', mode='r') as file:
+    #     data_1.append(json.load(file))
     
-    tasks_at_end = {name:str(score)}
-    for i in data_1:
-        if type(i) is list:
-            final_data.append(i[1])
-        else:
-            final_data.append(i)
-    final_data.append(tasks_at_end)
+    # tasks_at_end = {name:str(score)}
+    # for i in data_1:
+    #     if type(i) is list:
+    #         final_data.append(i[1])
+    #     else:
+    #         final_data.append(i)
 
-    with open('leaderboard.json', mode='w') as f:
-        json.dump(final_data,f)
+    # final_data.append(tasks_at_end)
 
-    return
+    # with open('leaderboard.json', mode='w') as f:
+    #     json.dump(final_data,f)
+
+    # return
 
 def run_game(hard_mode = False):
 
