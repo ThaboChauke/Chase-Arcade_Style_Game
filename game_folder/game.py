@@ -1,5 +1,6 @@
-from turtle import *
+import json
 import random
+from turtle import *
 from tkinter import messagebox
 
 
@@ -67,7 +68,6 @@ def keyboard(item):
     onkey(Turn_right, 'Right')
 
 
-
 def random_target():
     """_Generates random coordinates_
 
@@ -104,6 +104,7 @@ def game_zone_check(item):
     return item.xcor() <= -300 or item.xcor() >=  300 or item.ycor() <= -300 or item.ycor() >= 300
 
 
+#######################KEEPING TRACK
 def keeping_score(item,score):
     """_Writes and updates the player's score on the turtle screen_
 
@@ -117,6 +118,30 @@ def keeping_score(item,score):
     current_score = f"Score: {score}"
     item.write(current_score,False,align='left',font=('Palatino',14,'normal'))
 
+
+def add_to_json(name,score):
+    """_This function adds the user's name to a dictionary with score
+    as key and updates json file_
+    """
+
+    data_1 = []
+    final_data = []
+
+    with open('leaderboard.json', mode='r') as file:
+        data_1.append(json.load(file))
+    
+    tasks_at_end = {name:str(score)}
+    for i in data_1:
+        if type(i) is list:
+            final_data.append(i[1])
+        else:
+            final_data.append(i)
+    final_data.append(tasks_at_end)
+
+    with open('leaderboard.json', mode='w') as f:
+        json.dump(final_data,f)
+
+    return
 
 def run_game(hard_mode = False):
 
@@ -158,6 +183,7 @@ def run_game(hard_mode = False):
         if game_zone_check(chaser):
             messagebox.showwarning("Alert", f"Game Over\n \nYour Score: {score}")
             get_name = window.textinput('Name', 'Enter your name:')
+            add_to_json(get_name,score)
             window.bye()
 
         elif chaser.distance(target) < 20:
@@ -175,7 +201,7 @@ def run_game(hard_mode = False):
             if chaser.distance(obstacle) < 20:
                 messagebox.showwarning("Alert", f"Game Over\n \nYour Score: {score}")
                 get_name = window.textinput('Name', 'Enter your name:')
-                print(hard_mode)
+                add_to_json(get_name,score)
                 window.bye()
             
         window.update()
