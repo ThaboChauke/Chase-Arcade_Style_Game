@@ -154,7 +154,7 @@ def run_game(hard_mode = False):
     window = Screen()
     window.title("Chase")
     window.bgcolor('black')
-    window.setup(700,700)
+    window.setup(800,800)
 
 ############TURTLE CALLS
     chaser = Chaser()

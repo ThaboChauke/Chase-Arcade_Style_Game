@@ -12,7 +12,7 @@ menu_music()
 def main():
 #################APP SETUP
     app = Tk()
-    app.geometry('500x500')
+    app.geometry('800x800')
     app.title('Chase')
     app.config(background='black',highlightthickness=4,highlightcolor='red',highlightbackground="blue")
     padding = (5,5)
@@ -45,6 +45,10 @@ def main():
             app.destroy()
             run_board()
 
+    def help_function():
+        app.destroy()
+        run_help()
+
 ##################BUTTONS AND LABELS
     empty = Label(app,text='',background='black')
     empty.pack()
@@ -64,6 +68,9 @@ def main():
     leaderboard = Button(app,text='View Leaderboard',command=leaderboard_function,width=20,height=2,font=('Palatino',8),highlightbackground='red')
     leaderboard.pack(pady=padding)
 
+    game_help = Button(app,text='Help',command=help_function,width=20,height=2,font=('Palatino',8),highlightbackground='red')
+    game_help.pack(pady=padding)
+
     exit_game = Button(app,text='Exit',command=exit_game_funtion,width=20,height=2,font=('Palatino',8),highlightbackground='red')
     exit_game.pack(pady=padding)
 
@@ -76,11 +83,81 @@ def main():
     mainloop()
 
 
+def run_help():
+#################APP SETUP
+    app = Tk()
+    app.geometry('800x800')
+    app.title('Chase - Help')
+    app.config(background='black',highlightthickness=4,highlightcolor='red',highlightbackground="blue")
+
+
+    def back_to_home():
+        app.destroy()
+        main()
+
+
+    def exit_game_function():
+        prompt = messagebox.askyesno('Exit', 'Are you sure')
+        
+        if prompt:
+            app.destroy()
+
+
+    empty = Label(app,text='',background='black')
+    empty.grid(row=1)
+
+    name = Label(app,text='Chase - Help',background='black',font=('Palatino',16),fg='white')
+    name.grid(row=2,column=0, columnspan=2)
+
+    empty = Label(app,text='',background='black')
+    empty.grid(row=3)
+
+    
+    app.grid_rowconfigure(4, weight=1)
+    app.grid_columnconfigure(0, weight=1)
+    app.grid_columnconfigure(1, weight=1)
+
+    help_text = Text(app, wrap=WORD, font=('Palatino', 12), bg='black', fg='white', bd=0, highlightthickness=0)
+    help_text.grid(row=4, column=0, sticky='nsew', columnspan=2)
+
+    help_content = """
+    Welcome to "Chase" Help!
+
+    In this game, your objective is to move around and hit
+    target, as many as you can.
+
+    Controls:
+    - Use the left and right arrow keys to move your character.
+
+    Game Modes:
+    - Play: Start a regular game session.
+    - Play HardMode: Engage in a more challenging game experience.
+
+    Leaderboard:
+    - View Leaderboard: See top scores of other players.
+
+    Exiting the Game:
+    - Use the 'Exit' button to close the game.
+
+    Enjoy playing "Chase"!
+
+    """
+
+    help_text.insert(END, help_content)
+
+    leaderboard = Button(app, text='Back to Home', command=back_to_home, font=('Palatino',8), highlightbackground='red')
+    leaderboard.grid(row=5, column=0, sticky='ew')
+
+    exit_game = Button(app, text='Exit', command=exit_game_function, font=('Palatino',8), highlightbackground='red')
+    exit_game.grid(row=5, column=1, sticky='ew')
+
+    mainloop()
+
 def run_board():
 #################APP SETUP
     app = Tk()
-    app.geometry('500x500')
-    app.title('Leaderboard')
+    app.geometry('800x800')
+    app.title('Chase - Leaderboard')
     app.config(background='black',highlightthickness=4,highlightcolor='red',highlightbackground="blue")
 
 
