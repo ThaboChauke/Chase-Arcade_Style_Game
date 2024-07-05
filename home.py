@@ -2,7 +2,13 @@ import json
 from tkinter import *
 from tkinter import messagebox
 from game_folder.game import run_game
+from music import BackgroundMusic
 
+
+def menu_music():
+    BackgroundMusic.play_background_music("background_music/save-as-115826.mp3")
+
+menu_music()
 def main():
 #################APP SETUP
     app = Tk()
@@ -11,12 +17,14 @@ def main():
     app.config(background='black',highlightthickness=4,highlightcolor='red',highlightbackground="blue")
     padding = (5,5)
 
+
 ###################COMMANDS
     def play_game():
         try:
             app.destroy()
             run_game()
         except :
+            menu_music()
             main()       
 
     def play_hard_mode():
@@ -24,6 +32,7 @@ def main():
             app.destroy()
             run_game(True)
         except :
+            menu_music()
             main()        
 
     def exit_game_funtion():

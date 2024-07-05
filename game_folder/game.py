@@ -1,5 +1,6 @@
 import json
 import random
+from music import BackgroundMusic
 from turtle import *
 from tkinter import messagebox
 
@@ -119,6 +120,12 @@ def keeping_score(item,score):
     item.write(current_score,False,align='left',font=('Palatino',14,'normal'))
 
 
+def game_over_sound():
+    """_stops game music and play game over sound_
+    """
+    BackgroundMusic.stop_background_music()
+    BackgroundMusic.play_background_music("background_music/game-over-38511.mp3")
+
 def add_to_json(name, score):
     """_Adds player's name and score json file_
 
@@ -140,6 +147,8 @@ def add_to_json(name, score):
 
 
 def run_game(hard_mode = False):
+    BackgroundMusic.stop_background_music()
+    BackgroundMusic.play_background_music("background_music/arcade-party-173553.mp3")
 
 ###################SETUP WINDOW
     window = Screen()
@@ -177,6 +186,7 @@ def run_game(hard_mode = False):
         chaser.speed(3) 
 
         if game_zone_check(chaser):
+            game_over_sound()
             messagebox.showwarning("Alert", f"Game Over\n \nYour Score: {score}")
             get_name = window.textinput('Name', 'Enter your name:')
             add_to_json(get_name,score)
@@ -195,6 +205,7 @@ def run_game(hard_mode = False):
 
         for obstacle in obstacles:
             if chaser.distance(obstacle) < 20:
+                game_over_sound()
                 messagebox.showwarning("Alert", f"Game Over\n \nYour Score: {score}")
                 get_name = window.textinput('Name', 'Enter your name:')
                 add_to_json(get_name,score)
