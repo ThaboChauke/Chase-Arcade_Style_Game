@@ -6,7 +6,7 @@ class BackgroundMusic:
         pass
 
     def play_background_music(filepath):
-        
+       
         try :
             pg.mixer.init()
             pg.mixer.music.load(filepath)

@@ -1,14 +1,15 @@
 import json
 from tkinter import *
 from tkinter import messagebox
-from game_folder.game import run_game
 from music import BackgroundMusic
+from game_folder.game import run_game
 
 
 def menu_music():
     BackgroundMusic.play_background_music("background_music/save-as-115826.mp3")
 
 menu_music()
+
 def main():
 #################APP SETUP
     app = Tk()
@@ -82,7 +83,6 @@ def main():
 
     mainloop()
 
-
 def run_help():
 #################APP SETUP
     app = Tk()
@@ -90,11 +90,9 @@ def run_help():
     app.title('Chase - Help')
     app.config(background='black',highlightthickness=4,highlightcolor='red',highlightbackground="blue")
 
-
     def back_to_home():
         app.destroy()
         main()
-
 
     def exit_game_function():
         prompt = messagebox.askyesno('Exit', 'Are you sure')
@@ -160,11 +158,9 @@ def run_board():
     app.title('Chase - Leaderboard')
     app.config(background='black',highlightthickness=4,highlightcolor='red',highlightbackground="blue")
 
-
     def back_to_home():
         app.destroy()
         main()
-
 
     def exit_game_function():
         prompt = messagebox.askyesno('Exit', 'Are you sure')
@@ -206,8 +202,7 @@ def run_board():
 
     mainloop()
 
-
-def read_leaderboard_from_json():
+def read_leaderboard_from_json() -> list:
     """_Reads player's data from json file_
 
     Returns:
@@ -227,6 +222,6 @@ def read_leaderboard_from_json():
 
     return leaderboard_data
 
-
 if __name__ == '__main__':
     main()
+    
