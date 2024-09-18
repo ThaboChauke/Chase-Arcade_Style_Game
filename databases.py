@@ -4,19 +4,20 @@ import sqlite3
 def create_table(cursor):
     cursor.execute("""
 CREATE TABLE IF NOT EXISTS normal_mode (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    score INTEGER
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    score INTEGER NOT NULL
 )
 """)
     
     cursor.execute("""
 CREATE TABLE IF NOT EXISTS hard_mode (
-    id INTEGER PRIMARY KEY,
-    name TEXT,
-    score INTEGER
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    name TEXT NOT NULL,
+    score INTEGER NOT NULL
 )
 """)
+    
     
 def update_score():
     pass
