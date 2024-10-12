@@ -39,8 +39,9 @@ def view(cursor, mode):
     elif mode == "hard":
         mode_query = "hard_mode"
     
-    cursor.execute(f"SELECT * FROM {mode_query} LIMIT 10")
+    cursor.execute(f"SELECT name, score FROM {mode_query} ORDER BY score DESC LIMIT 10")
     return cursor.fetchall()
+
 
 def update_score(cursor, name, score, mode):
     """

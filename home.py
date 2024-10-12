@@ -1,8 +1,10 @@
-import json
+import sqlite3
 from tkinter import *
-from tkinter import messagebox
+from databases import view
+from tkinter.ttk import Combobox
 from music import BackgroundMusic
 from game_folder.game import run_game
+from tkinter import messagebox, StringVar
 
 
 def menu_music():
@@ -163,11 +165,20 @@ def run_board():
         main()
 
     def exit_game_function():
-        prompt = messagebox.askyesno('Exit', 'Are you sure')
-        
+        prompt = messagebox.askyesno('Exit', 'Are you sure?')
         if prompt:
             app.destroy()
 
+    def update_leaderboard(mode):
+        """Update the Listbox to show the leaderboard for the selected mode."""
+        board.delete(0, 'end')
+
+        with sqlite3.connect('scoreboard.db') as connection:
+            cursor = connection.cursor()
+            leaderboard_data = view(cursor, mode)
+
+        for name, score in leaderboard_data:
+            board.insert('end', f"{name:<20}{score:>10}")
 
     empty = Label(app,text='',background='black')
     empty.grid(row=1)
@@ -178,21 +189,25 @@ def run_board():
     empty = Label(app,text='',background='black')
     empty.grid(row=3)
 
-
     app.grid_rowconfigure(4, weight=1)
     app.grid_columnconfigure(0, weight=1)
     app.grid_columnconfigure(1, weight=1)
 
-    board = Listbox(app, highlightcolor='red')
-    board.grid(row=4, column=0, sticky='nsew', columnspan=2)
-
-    leaderboard_data = read_leaderboard_from_json()
-
     board = Listbox(app, highlightcolor='red', font=('Palatino', 12))
     board.grid(row=4, column=0, sticky='nsew', columnspan=2)
 
-    for name, score in leaderboard_data:
-        board.insert('end', f"{name:<20}{score:>10}")
+    mode_var = StringVar()
+    mode_combobox = Combobox(app, textvariable=mode_var, values=['normal', 'hard'], state='readonly')
+    mode_combobox.grid(row=3, column=0, columnspan=2)
+    mode_combobox.current(0) 
+
+    def on_mode_change(event):
+        selected_mode = mode_var.get()
+        update_leaderboard(selected_mode)
+
+    mode_combobox.bind("<<ComboboxSelected>>", on_mode_change)
+
+    update_leaderboard(mode_combobox.get())
 
     leaderboard = Button(app, text='Back to Home', command=back_to_home, font=('Palatino',8), highlightbackground='red')
     leaderboard.grid(row=5, column=0, sticky='ew')
@@ -201,26 +216,6 @@ def run_board():
     exit_game.grid(row=5, column=1, sticky='ew')
 
     mainloop()
-
-def read_leaderboard_from_json() -> list:
-    """_Reads player's data from json file_
-
-    Returns:
-        _list_: _list of tuples containing names and scores of players_
-    """
-    
-    try:
-        with open('leaderboard.json', mode='r') as file:
-            data = json.load(file)
-    except FileNotFoundError:
-        return []
-
-    leaderboard_data = []
-    for entry in data:
-        for name, score in entry.items():
-            leaderboard_data.append((name, int(score)))
-
-    return leaderboard_data
 
 if __name__ == '__main__':
     main()

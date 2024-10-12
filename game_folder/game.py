@@ -119,7 +119,6 @@ def keeping_score(item,score):
     current_score = f"Score: {score}"
     item.write(current_score,False,align='left',font=('Palatino',14,'normal'))
 
-
 def add_to_db(name, score, mode):
     """_Adds a player's score to the database for the specified game mode._
 
