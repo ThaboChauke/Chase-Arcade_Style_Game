@@ -76,3 +76,6 @@ This project uses music and sound effects from various talented artists on Pixab
 - [Maksym Dudchyk](https://pixabay.com/users/white_records-32584949/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=223905)
 - [Oleksii Holubiev](https://pixabay.com/users/loksii-40853646/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=211881)
 - Sound Effect from [Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=38511)
+
+## License
+This project is licensed under the MIT License. See the [LICENCE](LICENSE) file for details.
