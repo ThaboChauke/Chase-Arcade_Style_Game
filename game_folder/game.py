@@ -1,8 +1,9 @@
-import json
 import random
 from turtle import *
 from tkinter import messagebox
 from music import BackgroundMusic
+from databases import update_score
+import sqlite3
 
 
 ####################SETUP TURTLES
@@ -118,24 +119,27 @@ def keeping_score(item,score):
     current_score = f"Score: {score}"
     item.write(current_score,False,align='left',font=('Palatino',14,'normal'))
 
-def add_to_json(name, score):
-    """_Adds player's name and score json file_
 
-    Args:
-        name (_str_): _player's name_
-        score (_int_): _player's score_
+def add_to_db(name, score, mode):
+    """_Adds a player's score to the database for the specified game mode._
+
+    Parameters:
+    name (_str_): The name of the player.
+    score (_int_): The score achieved by the player.
+    mode (_bool_): The game mode; True for hard mode, False for normal mode.
+
+    If the name or score is empty, the function will skip the database update.
     """
-    
-    try:
-        with open('leaderboard.json', mode='r') as file:
-            data = json.load(file)
-    except FileNotFoundError:
-        data = []
+    if not name or not score:
+        print("Name or score is missing. Skipping database update.")
+        return
 
-    data.append({name: score})
+    with sqlite3.connect('scoreboard.db') as connection:
+        cursor = connection.cursor()
 
-    with open('leaderboard.json', mode='w') as file:
-        json.dump(data, file)
+        update_score(cursor, name, score, mode)
+        connection.commit()
+
 
 ########################HANDLING SOUND
 def game_over_sound():
@@ -201,7 +205,7 @@ def run_game(hard_mode = False):
             game_over_sound()
             messagebox.showwarning("Alert", f"Game Over\n \nYour Score: {score}")
             get_name = window.textinput('Name', 'Enter your name:')
-            add_to_json(get_name,score)
+            add_to_db(get_name,score,hard_mode)
             window.bye()
 
         elif chaser.distance(target) < 20:
@@ -220,7 +224,7 @@ def run_game(hard_mode = False):
                 game_over_sound()
                 messagebox.showwarning("Alert", f"Game Over\n \nYour Score: {score}")
                 get_name = window.textinput('Name', 'Enter your name:')
-                add_to_json(get_name,score)
+                add_to_db(get_name,score,hard_mode)
                 window.bye()
             
         window.update()
